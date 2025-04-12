@@ -1,0 +1,34 @@
+name: CI/CD for Dev Branch
+
+on:
+    push:
+      branches:
+        - dev
+      
+    pull_request:
+      branches:
+        - dev
+
+jobs:
+    build:
+      runs-on: ubantu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Set up Node.js (example step)
+          uses: actions/setup-node@v4
+          with:
+              node-version: '18'
+
+        - name: Install dependencies
+          run : npm install
+
+        - name: Run tests
+          run: npm test
+
+        # Example deployment step
+        - name: Deploy to dev server
+          if:  success()
+          run: echo "Deploying to dev server..."
